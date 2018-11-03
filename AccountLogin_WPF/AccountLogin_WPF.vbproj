@@ -73,6 +73,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Product.vb" />
+    <Page Include="Windows\EmployeeManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EmployeeWindows\CreateEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -81,8 +90,14 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data.vb" />
-    <Compile Include="Employee.vb" />
+    <Compile Include="Classes\Employee.vb" />
+    <Compile Include="Utilities.vb" />
+    <Compile Include="Windows\EmployeeManagement.xaml.vb">
+      <DependentUpon>EmployeeManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EmployeeWindows\CreateEmployee.xaml.vb">
+      <DependentUpon>CreateEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -143,7 +158,9 @@
     <Resource Include="Images\malishLogo.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\malishLogoMini.png" />
+    <Resource Include="Images\malishLogoMini.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DATA\main.db3">

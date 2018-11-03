@@ -22,7 +22,7 @@ Public Class Employee
         Me.Type = type
         Me.Title = title
         Me.PayRate = pay
-        'TODO Add this to the data employees list
+        'TODO Add this to the data employees list/ Wichi is the database in this version
     End Sub
 
     Public Sub Description()

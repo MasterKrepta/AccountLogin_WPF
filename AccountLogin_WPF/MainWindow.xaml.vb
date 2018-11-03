@@ -42,4 +42,19 @@ Class MainWindow
         End Try
     End Sub
 
+    Private Sub btnEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnEmployee.Click
+        Dim empManage As New EmployeeManagement()
+        Me.Hide()
+        empManage.Show()
+
+    End Sub
+    Private Sub btnInventory_Click(sender As Object, e As RoutedEventArgs) Handles btnInventory.Click
+
+    End Sub
+
+    Private Sub btnProduction_Click(sender As Object, e As RoutedEventArgs) Handles btnProduction.Click
+
+    End Sub
+
+
 End Class
