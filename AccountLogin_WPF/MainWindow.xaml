@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccountLogin_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Loaded="OnLoad">
+
+    <Window.Resources>
+        
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -24,6 +29,7 @@
             <Button>Employee Management</Button>
             <Button>Inventory Management</Button>
             <Button>Production Management</Button>
+            <DataGrid x:Name="TestGrid" Height="187" />
         </StackPanel>
     </Grid>
 </Window>

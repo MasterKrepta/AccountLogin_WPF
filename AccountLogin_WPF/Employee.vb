@@ -10,10 +10,13 @@ Public Class Employee
     End Enum
 
     Public Name As String
-    Public Type As EmployeeType
+    Public Type As String
     Public Title As String
     Public PayRate As Double
 
+    Public Sub New()
+
+    End Sub
     Public Sub New(name As String, type As EmployeeType, title As String, pay As Double)
         Me.Name = name
         Me.Type = type
