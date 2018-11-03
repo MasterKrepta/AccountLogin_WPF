@@ -40,16 +40,6 @@ Class MainWindow
         Catch ex As Exception
             System.Windows.MessageBox.Show(ex.Message)
         End Try
-
-
-
     End Sub
 
-
-
-
-
-    'Employee Mangement
-    'Inventory Management
-    'Production
 End Class
