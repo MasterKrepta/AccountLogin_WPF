@@ -3,7 +3,7 @@
 Public Class ucShowEmployee
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         Dim emp As Employee = New Employee()
-        Dim cbx As ComboBox = cbxEmployee
+        Dim dg As DataGrid = newEmployee
         emp.Name = newName.Text
         emp.Type = newType.Text
         emp.Title = newTitle.Text
@@ -16,7 +16,10 @@ Public Class ucShowEmployee
         End Try
 
         GetData.InsertEmployee(emp)
-        GetData.ShowEmployee(emp)
+        'GetData.ShowEmployee(emp)
+        Dim main As New MainWindow()
+        Dim parent As Window = Window.GetWindow(Me)
+        Utilities.ShowHide(parent, main)
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click

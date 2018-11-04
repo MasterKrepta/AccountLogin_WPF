@@ -3,8 +3,12 @@ Imports System.Data.SQLite
 Imports AccountLogin_WPF
 
 Module GetData
-    Public connPath As String = "Data Source=DATA\main.db3;Version=3"
 
+    Dim path As String = My.Application.Info.DirectoryPath + "\DATA\"
+    Dim fileName As String = "main.db3"
+    Dim fullPath As String = IO.Path.Combine(path, fileName)
+
+    Public connPath As String = String.Format("Data Source={0}", fullPath)
 
     Friend Sub ShowEmployee(emp As Employee)
         MessageBox.Show("Show the employee here")
@@ -44,10 +48,7 @@ Module GetData
     Public Sub InsertEmployee(emp As Employee)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
             Dim insertString As String = "INSERT INTO Employees(Name, Type, Title, PayRate, Active) VALUES (@Name, @Type, @Title, @Pay, @Active)"
-            'Dim valuesString As String = "VALUES ('" & emp.Name & "','" & emp.Type & "','" & emp.Title & "','" & emp.PayRate)
-
             Dim cmd As New SQLiteCommand(insertString, conn)
-
 
             cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = emp.Name
             cmd.Parameters.Add("@Type", SqlDbType.VarChar).Value = emp.Type
@@ -55,10 +56,11 @@ Module GetData
             cmd.Parameters.Add("@Pay", SqlDbType.Real).Value = emp.PayRate
             cmd.Parameters.Add("@Active", SqlDbType.Int).Value = 1
 
-
             conn.Open()
             cmd.ExecuteNonQuery()
             MessageBox.Show(emp.Name + " has been added")
+
+
             conn.Close()
         End Using
     End Sub

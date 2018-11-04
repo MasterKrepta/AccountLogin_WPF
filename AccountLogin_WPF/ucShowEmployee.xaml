@@ -32,8 +32,6 @@
             <Button Name="btnCreate" Content="Create Employee" Height="100"/>
             <Button Name="btnCancel" Content="Cancel" Height="100"/>
         </StackPanel>
-        <ComboBox Name="cbxEmployee"
-                      ItemsSource="{Binding Mode=OneWay}" DisplayMemberPath="Name"
-                  Grid.Column="1" Grid.Row="5"/>
+        <DataGrid Name="newEmployee" Grid.Column="1" Grid.Row="5"/>
     </Grid>
 </UserControl>
