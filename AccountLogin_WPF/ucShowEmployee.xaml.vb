@@ -1,0 +1,32 @@
+
+
+Public Class ucShowEmployee
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
+        Dim emp As Employee = New Employee()
+        Dim cbx As ComboBox = cbxEmployee
+        emp.Name = newName.Text
+        emp.Type = newType.Text
+        emp.Title = newTitle.Text
+
+        Try
+            emp.PayRate = Double.Parse(newPay.Text)
+            'MessageBox.Show("Can Parse " + emp.PayRate.ToString())
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+        GetData.InsertEmployee(emp)
+        GetData.ShowEmployee(emp)
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
+        Dim main = New MainWindow()
+        Dim parent = TryCast(Me.Parent, Window)
+        If Not parent Is Nothing Then
+
+            parent.Hide()
+        End If
+
+        main.Show()
+    End Sub
+End Class

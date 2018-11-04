@@ -10,7 +10,7 @@ Class MainWindow
             Dim entity As Employee = Nothing
 
             cmd = New SQLiteCommand("SELECT * FROM Employees")
-            Using conn As SQLiteConnection = New SQLiteConnection("Data Source=DATA\main.db3;Version=3")
+            Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
                 cmd.Connection = conn
                 cmd.Connection.Open()
                 'MessageBox.Show("Connection established")

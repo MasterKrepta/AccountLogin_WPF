@@ -74,6 +74,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Product.vb" />
+    <Page Include="ucShowEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\EmployeeManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -91,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Employee.vb" />
+    <Compile Include="GetData.vb" />
+    <Compile Include="ucShowEmployee.xaml.vb">
+      <DependentUpon>ucShowEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.vb" />
     <Compile Include="Windows\EmployeeManagement.xaml.vb">
       <DependentUpon>EmployeeManagement.xaml</DependentUpon>
