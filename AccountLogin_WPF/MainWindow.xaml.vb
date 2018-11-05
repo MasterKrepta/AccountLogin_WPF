@@ -3,7 +3,6 @@ Imports System.Data.SQLite
 Class MainWindow
 
     Public Sub OnLoad(sender As Object, e As RoutedEventArgs)
-        'Dim conn As New SQLiteConnection("Data Source=DATA\main.db3;Version=3")
         Try
             Dim cmd As SQLiteCommand = Nothing
             Dim employees As New List(Of Employee)()
@@ -13,28 +12,11 @@ Class MainWindow
             Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
                 cmd.Connection = conn
                 cmd.Connection.Open()
-                'MessageBox.Show("Connection established")
+
                 Dim adapter As New SQLiteDataAdapter(cmd)
                 Dim dt As DataTable = New DataTable
                 adapter.Fill(dt)
                 TestGrid.ItemsSource = dt.DefaultView
-                'Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                '    'MessageBox.Show("Reader open")
-
-                '    While reader.Read()
-
-                '        entity = New Employee()
-                '        entity.Name = reader.GetString(0)
-                '        entity.Type = reader.GetString(1)
-                '        entity.Title = reader.GetString(2)
-                '        entity.PayRate = reader.GetDouble(3)
-
-                '        employees.Add(entity)
-                '    End While
-                '    cmd.Connection.Close()
-                '    TestGrid.ItemsSource = employees.ToList()
-                '    System.Windows.MessageBox.Show("ALL IS GOOD")
-                'End Using
 
             End Using
         Catch ex As Exception
@@ -56,5 +38,7 @@ Class MainWindow
 
     End Sub
 
-
+    Private Sub btnExit_Click(sender As Object, e As RoutedEventArgs) Handles btnExit.Click
+        Environment.Exit(0)
+    End Sub
 End Class
