@@ -1,13 +1,18 @@
 Public Class Product
 
-    Dim Name As String
-    Dim Location As String
-    Dim Cost As Double
-    Dim SalePrice As Double
-    Dim QtyOnHand As Integer
+    Public Name As String
+    Public Desc As String
+    Public Location As String
+    Public Cost As Double
+    Public SalePrice As Double
+    Public QtyOnHand As Integer
 
-    Public Sub New(name As String, loc As String, cost As Double, salePrice As Double, qty As Integer)
+    Public Sub New()
+
+    End Sub
+    Public Sub New(name As String, desc As String, loc As String, cost As Double, salePrice As Double, qty As Integer)
         Me.Name = name
+        Me.Desc = desc
         Me.Location = loc
         Me.Cost = cost
         Me.SalePrice = salePrice

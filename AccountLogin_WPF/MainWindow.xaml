@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccountLogin_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="OnLoad">
+        Title="MainWindow" Height="450" Width="800">
+    
 
     <Window.Resources>
         
@@ -29,7 +29,10 @@
             <Button Name="btnEmployee" >Employee Management</Button>
             <Button Name="btnInventory">Inventory Management</Button>
             <Button Name="btnProduction">Production Management</Button>
-            <DataGrid x:Name="TestGrid"  />
+            <DataGrid x:Name="TestGrid"  MaxHeight="150"
+                        ScrollViewer.CanContentScroll="True"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            
         </StackPanel>
         <Button Name="btnExit" Content="EXIT" Grid.Column="2" Grid.Row="1" FontSize="50"/>
     </Grid>

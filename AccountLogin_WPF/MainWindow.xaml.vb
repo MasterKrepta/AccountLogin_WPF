@@ -31,11 +31,13 @@ Class MainWindow
 
     End Sub
     Private Sub btnInventory_Click(sender As Object, e As RoutedEventArgs) Handles btnInventory.Click
-
+        Dim invManage As New InventoryManagement()
+        Utilities.ShowHide(Me, invManage)
     End Sub
 
     Private Sub btnProduction_Click(sender As Object, e As RoutedEventArgs) Handles btnProduction.Click
-
+        Dim prodManage As New ProductionManagement()
+        Utilities.ShowHide(Me, prodManage)
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As RoutedEventArgs) Handles btnExit.Click

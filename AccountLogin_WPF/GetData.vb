@@ -65,4 +65,25 @@ Module GetData
             conn.Close()
         End Using
     End Sub
+
+    Public Sub InsertProduct(prod As Product)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = "INSERT INTO Products(Name, Description, Location, Cost, SalePrice, QtyOnHand) VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = prod.Name
+            cmd.Parameters.Add("@Desc", SqlDbType.VarChar).Value = prod.Desc
+            cmd.Parameters.Add("@Loc", SqlDbType.VarChar).Value = prod.Location
+            cmd.Parameters.Add("@Cost", SqlDbType.Real).Value = prod.Cost
+            cmd.Parameters.Add("@SalePrice", SqlDbType.Real).Value = prod.SalePrice
+            cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = prod.QtyOnHand
+
+            conn.Open()
+            cmd.ExecuteNonQuery()
+            MessageBox.Show(prod.Name + " has been added")
+
+
+            conn.Close()
+        End Using
+    End Sub
 End Module

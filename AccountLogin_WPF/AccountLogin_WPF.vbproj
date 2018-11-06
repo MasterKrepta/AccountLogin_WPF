@@ -74,7 +74,38 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Product.vb" />
-    <Page Include="ucShowEmployee.xaml">
+    <Compile Include="User Controls\ucCreateProducts.xaml.vb">
+      <DependentUpon>ucCreateProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
+      <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductWIndows\CreateProduct.xaml.vb">
+      <DependentUpon>CreateProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductionManagement.xaml.vb">
+      <DependentUpon>ProductionManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductWIndows\RemoveProduct.xaml.vb">
+      <DependentUpon>RemoveProduct.xaml</DependentUpon>
+    </Compile>
+    <Page Include="User Controls\ucCreateProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\ucRemoveProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductWIndows\CreateProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InventoryManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\ucShowEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,7 +127,10 @@
     </Compile>
     <Compile Include="Classes\Employee.vb" />
     <Compile Include="GetData.vb" />
-    <Compile Include="ucShowEmployee.xaml.vb">
+    <Compile Include="Windows\InventoryManagement.xaml.vb">
+      <DependentUpon>InventoryManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\ucShowEmployee.xaml.vb">
       <DependentUpon>ucShowEmployee.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities.vb" />
@@ -110,6 +144,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\ProductionManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductWIndows\RemoveProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Threading.Tasks" />
