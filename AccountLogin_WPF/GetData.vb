@@ -4,12 +4,16 @@ Imports AccountLogin_WPF
 
 Module GetData
 
+    'DataBase Connections
     Dim path As String = My.Application.Info.DirectoryPath + "\DATA\"
     Dim fileName As String = "main.db3"
     Dim fullPath As String = IO.Path.Combine(path, fileName)
+    Public connPath As String = String.Format("Data Source={0}", fullPath)
     'TODO This affects the file in the debug folder, is this correct or do I need to tweak it for final release
 
-    Public connPath As String = String.Format("Data Source={0}", fullPath)
+
+    Public FinalizedJobs As List(Of Product) = New List(Of Product)
+
 
     Friend Sub ShowEmployee(emp As Employee)
         MessageBox.Show("Show the employee here")
@@ -66,6 +70,7 @@ Module GetData
         End Using
     End Sub
 
+
     Public Sub InsertProduct(prod As Product)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
             Dim insertString As String = "INSERT INTO Products(Name, Description, Location, Cost, SalePrice, QtyOnHand) VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
@@ -83,7 +88,21 @@ Module GetData
             MessageBox.Show(prod.Name + " has been added")
 
 
+
             conn.Close()
         End Using
     End Sub
+
+    Public Function GetFinalJobs()
+        Dim cmd As SQLiteCommand = Nothing
+        cmd = New SQLiteCommand("SELECT * FROM Sales")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+
+            Dim reader As SQLiteDataReader()
+
+
+        End Using
+    End Function
 End Module

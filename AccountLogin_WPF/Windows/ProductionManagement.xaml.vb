@@ -28,4 +28,9 @@ Public Class ProductionManagement
         Dim main As New MainWindow()
         Utilities.ShowHide(Me, main)
     End Sub
+
+    Private Sub btnProfits_Click(sender As Object, e As RoutedEventArgs) Handles btnProfits.Click
+        Dim profit As New ShowProfit()
+        Utilities.ShowHide(Me, profit)
+    End Sub
 End Class

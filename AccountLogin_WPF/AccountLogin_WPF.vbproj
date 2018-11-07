@@ -89,6 +89,9 @@
     <Compile Include="Windows\ProductWIndows\RemoveProduct.xaml.vb">
       <DependentUpon>RemoveProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ShowProfit.xaml.vb">
+      <DependentUpon>ShowProfit.xaml</DependentUpon>
+    </Compile>
     <Page Include="User Controls\ucCreateProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ProductWIndows\RemoveProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ShowProfit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
