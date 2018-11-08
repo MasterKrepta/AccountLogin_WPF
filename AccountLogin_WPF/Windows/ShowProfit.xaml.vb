@@ -8,9 +8,10 @@ Public Class ShowProfit
         Dim numJobs As Integer = 0
 
         'Calculate
-        For Each job In GetData.GetFinalJobs()
-            totalSales += job.SalePrice
-            totalCost += job.Cost
+        GetData.GetFinalJobs()
+        For Each job In GetData.FinalizedJobs
+            totalSales += job.FinalSale
+            totalCost += job.TotalMatCost
             numJobs += 1
         Next
 
@@ -20,8 +21,8 @@ Public Class ShowProfit
         txtSales.Text = "Total Sales: " + totalSales.ToString()
         txtProfits.Text = "Total Profits: " + (totalSales - totalCost).ToString()
 
-
     End Sub
+
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         Dim main As New MainWindow()
         Utilities.ShowHide(Me, main)

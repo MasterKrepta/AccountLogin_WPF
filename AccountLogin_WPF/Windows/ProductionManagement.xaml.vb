@@ -33,4 +33,9 @@ Public Class ProductionManagement
         Dim profit As New ShowProfit()
         Utilities.ShowHide(Me, profit)
     End Sub
+
+    Private Sub btnComplete_Click(sender As Object, e As RoutedEventArgs) Handles btnComplete.Click
+        Dim completeJob As New CompleteJob()
+        Utilities.ShowHide(Me, completeJob)
+    End Sub
 End Class

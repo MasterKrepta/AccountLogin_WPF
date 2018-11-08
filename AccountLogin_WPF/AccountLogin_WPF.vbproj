@@ -73,12 +73,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Job.vb" />
     <Compile Include="Classes\Product.vb" />
+    <Compile Include="User Controls\ucCompleteJob.xaml.vb">
+      <DependentUpon>ucCompleteJob.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\ucCreateProducts.xaml.vb">
       <DependentUpon>ucCreateProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
       <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductionWindows\CompleteJob.xaml.vb">
+      <DependentUpon>CompleteJob.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ProductWIndows\CreateProduct.xaml.vb">
       <DependentUpon>CreateProduct.xaml</DependentUpon>
@@ -92,11 +99,19 @@
     <Compile Include="Windows\ShowProfit.xaml.vb">
       <DependentUpon>ShowProfit.xaml</DependentUpon>
     </Compile>
+    <Page Include="User Controls\ucCompleteJob.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Controls\ucCreateProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="User Controls\ucRemoveProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductionWindows\CompleteJob.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +239,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
