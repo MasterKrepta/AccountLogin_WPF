@@ -19,15 +19,11 @@
             <ColumnDefinition Width="103*"/>
             <ColumnDefinition Width="697*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Sale " Grid.Column="0" Grid.Row="0"/>
-        <Label Content="Type" Grid.Column="0" Grid.Row="1"/>
-        <Label Content="Job Title" Grid.Column="0" Grid.Row="2"/>
-        <Label Content="Pay Rate" Grid.Column="0" Grid.Row="3"/>
+        <Label Content="SalesOrder to Find " Grid.Column="0" Grid.Row="0"/>
+       
 
-        <TextBox Name="newName" Grid.Column="1" Grid.Row="0"/>
-        <TextBox Name="newType" Grid.Column="1" Grid.Row="1"/>
-        <TextBox Name="newTitle" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Name="newPay" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Name="txtQuery" Grid.Column="1" Grid.Row="0"/>
+        
         <StackPanel Grid.Column="0" Grid.Row="5">
             <Button Name="btnComplete" Content="Complete Job" Height="100"/>
             <Button Name="btnCancel" Content="Cancel" Height="100"/>

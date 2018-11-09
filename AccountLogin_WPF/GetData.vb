@@ -70,7 +70,8 @@ Module GetData
 
     Public Sub InsertProduct(prod As Product)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim insertString As String = "INSERT INTO Products(Name, Description, Location, Cost, SalePrice, QtyOnHand) VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
+            Dim insertString As String = "INSERT INTO Products(Name, Description, Location, Cost, SalePrice, QtyOnHand) 
+                                                        VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
             cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = prod.Name
@@ -84,12 +85,29 @@ Module GetData
             cmd.ExecuteNonQuery()
             MessageBox.Show(prod.Name + " has been added")
 
-
-
             conn.Close()
         End Using
     End Sub
 
+    Public Sub InsertJob(job As Job)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = "INSERT INTO Sales(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
+                                                    VALUES (@SaleNum, @Product, @Qty, @TotalCost, @FinalSale)"
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@SaleNum", SqlDbType.Int).Value = job.SalesNum
+            cmd.Parameters.Add("@Product", SqlDbType.VarChar).Value = job.ProductSold
+            cmd.Parameters.Add("@Qty", SqlDbType.VarChar).Value = job.QtySold
+            cmd.Parameters.Add("@TotalCost", SqlDbType.Real).Value = job.TotalMatCost
+            cmd.Parameters.Add("@FinalSale", SqlDbType.Real).Value = job.FinalSale
+
+            conn.Open()
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been added")
+
+            conn.Close()
+        End Using
+    End Sub
     Public Function GetFinalJobs()
         Dim cmd As SQLiteCommand = Nothing
 
@@ -111,5 +129,27 @@ Module GetData
             End Using
         End Using
     End Function
+
+    Public Function FindJob(query As Integer, grid As DataGrid)
+        Dim cmd As SQLiteCommand = Nothing
+
+        'cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Query", SqlDbType.Int).Value = query
+
+
+            Dim adapter As New SQLiteDataAdapter(cmd)
+            Dim dt As DataTable = New DataTable
+            adapter.Fill(dt)
+
+            grid.ItemsSource = dt.DefaultView()
+
+
+        End Using
+    End Function
+
 
 End Module

@@ -8,7 +8,7 @@ Public Class ShowProfit
         Dim numJobs As Integer = 0
 
         'Calculate
-        GetData.GetFinalJobs()
+
         For Each job In GetData.FinalizedJobs
             totalSales += job.FinalSale
             totalCost += job.TotalMatCost

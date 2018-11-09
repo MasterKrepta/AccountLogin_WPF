@@ -7,10 +7,10 @@ Public Class Job
     Public FinalSale As Double
 
     Public Sub New()
-
+        Me.SalesNum = GetData.FinalizedJobs.Count + 1
     End Sub
     Public Sub New(num As Integer, product As String, qty As Integer, cost As Double, final As Double)
-        Me.SalesNum = num
+        Me.SalesNum = GetData.FinalizedJobs.Count + 1
         Me.ProductSold = product
         Me.QtySold = qty
         Me.TotalMatCost = cost

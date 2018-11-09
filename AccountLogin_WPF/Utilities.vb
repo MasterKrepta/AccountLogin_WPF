@@ -4,4 +4,7 @@ Module Utilities
         newWin.Show()
     End Sub
 
+    Public Sub FindJob(query As String)
+
+    End Sub
 End Module

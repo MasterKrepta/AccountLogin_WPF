@@ -38,4 +38,9 @@ Public Class ProductionManagement
         Dim completeJob As New CompleteJob()
         Utilities.ShowHide(Me, completeJob)
     End Sub
+
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
+        Dim createJob As New CreateJob()
+        Utilities.ShowHide(Me, createJob)
+    End Sub
 End Class

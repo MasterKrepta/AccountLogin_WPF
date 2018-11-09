@@ -78,11 +78,17 @@
     <Compile Include="User Controls\ucCompleteJob.xaml.vb">
       <DependentUpon>ucCompleteJob.xaml</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\ucCreateJob.xaml.vb">
+      <DependentUpon>ucCreateJob.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\ucCreateProducts.xaml.vb">
       <DependentUpon>ucCreateProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
       <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateJob.xaml.vb">
+      <DependentUpon>CreateJob.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ProductionWindows\CompleteJob.xaml.vb">
       <DependentUpon>CompleteJob.xaml</DependentUpon>
@@ -103,11 +109,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="User Controls\ucCreateJob.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Controls\ucCreateProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="User Controls\ucRemoveProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateJob.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,6 +3,10 @@ Imports System.Data.SQLite
 Class MainWindow
 
     Public Sub OnLoad(sender As Object, e As RoutedEventArgs)
+        If GetData.FinalizedJobs.Count = 0 Then
+            GetData.GetFinalJobs()
+        End If
+
         Try
             Dim cmd As SQLiteCommand = Nothing
             Dim employees As New List(Of Employee)()
