@@ -1,16 +1,8 @@
 Public Class ucCreateJob
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-
         Dim main = New MainWindow()
-        Dim parent = TryCast(Me.Parent, Window)
-        If Not parent Is Nothing Then
-
-            parent.Hide()
-        End If
-
-        main.Show()
-
-
+        Dim parent = Utilities.GetParentWindow(Me)
+        Utilities.ShowHide(parent, main)
     End Sub
 
     Private Sub OnLoad()

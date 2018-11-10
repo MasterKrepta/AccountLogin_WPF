@@ -31,4 +31,9 @@ Public Class EmployeeManagement
         Dim main As New MainWindow()
         Utilities.ShowHide(Me, main)
     End Sub
+
+    Private Sub btnChange_Click(sender As Object, e As RoutedEventArgs) Handles btnChange.Click
+        Dim changeEmp As New ChangeEmployee()
+        Utilities.ShowHide(Me, changeEmp)
+    End Sub
 End Class

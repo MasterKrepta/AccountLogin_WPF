@@ -75,6 +75,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Job.vb" />
     <Compile Include="Classes\Product.vb" />
+    <Compile Include="User Controls\ucChangeEmployee.xaml.vb">
+      <DependentUpon>ucChangeEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\ucCompleteJob.xaml.vb">
       <DependentUpon>ucCompleteJob.xaml</DependentUpon>
     </Compile>
@@ -87,7 +90,10 @@
     <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
       <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CreateJob.xaml.vb">
+    <Compile Include="Windows\EmployeeWindows\ChangeEmployee.xaml.vb">
+      <DependentUpon>ChangeEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductionWindows\CreateJob.xaml.vb">
       <DependentUpon>CreateJob.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ProductionWindows\CompleteJob.xaml.vb">
@@ -105,6 +111,10 @@
     <Compile Include="Windows\ShowProfit.xaml.vb">
       <DependentUpon>ShowProfit.xaml</DependentUpon>
     </Compile>
+    <Page Include="User Controls\ucChangeEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Controls\ucCompleteJob.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,7 +131,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CreateJob.xaml">
+    <Page Include="Windows\EmployeeWindows\ChangeEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductionWindows\CreateJob.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

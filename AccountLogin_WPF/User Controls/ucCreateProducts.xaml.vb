@@ -1,9 +1,8 @@
 Public Class ucCreateProducts
 
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-        Dim main As New MainWindow()
-        Dim parent As New Window()
-        parent = Me.Parent
+        Dim main = New MainWindow()
+        Dim parent = Utilities.GetParentWindow(Me)
         Utilities.ShowHide(parent, main)
     End Sub
 

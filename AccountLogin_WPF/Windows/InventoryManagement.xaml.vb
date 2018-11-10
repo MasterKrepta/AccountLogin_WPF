@@ -33,4 +33,9 @@ Public Class InventoryManagement
         Dim newProd As New CreateProduct()
         Utilities.ShowHide(Me, newProd)
     End Sub
+
+    Private Sub btnRemove_Click(sender As Object, e As RoutedEventArgs) Handles btnRemove.Click
+        Dim remove As New RemoveProduct()
+        Utilities.ShowHide(Me, remove)
+    End Sub
 End Class

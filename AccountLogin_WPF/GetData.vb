@@ -74,9 +74,9 @@ Module GetData
                                                         VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = prod.Name
-            cmd.Parameters.Add("@Desc", SqlDbType.VarChar).Value = prod.Desc
-            cmd.Parameters.Add("@Loc", SqlDbType.VarChar).Value = prod.Location
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = prod.Name.ToUpper()
+            cmd.Parameters.Add("@Desc", SqlDbType.VarChar).Value = prod.Desc.ToUpper()
+            cmd.Parameters.Add("@Loc", SqlDbType.VarChar).Value = prod.Location.ToUpper()
             cmd.Parameters.Add("@Cost", SqlDbType.Real).Value = prod.Cost
             cmd.Parameters.Add("@SalePrice", SqlDbType.Real).Value = prod.SalePrice
             cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = prod.QtyOnHand
@@ -133,23 +133,34 @@ Module GetData
     Public Function FindJob(query As Integer, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
-        'cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
         cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
             cmd.Parameters.Add("@Query", SqlDbType.Int).Value = query
 
+            Dim adapter As New SQLiteDataAdapter(cmd)
+            Dim dt As DataTable = New DataTable
+            adapter.Fill(dt)
+
+            grid.ItemsSource = dt.DefaultView()
+        End Using
+    End Function
+
+    Public Function FindEmployee(query As Integer, grid As DataGrid)
+        Dim cmd As SQLiteCommand = Nothing
+
+        cmd = New SQLiteCommand("SELECT * FROM Employees WHERE Name = @Query")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query.ToString()
 
             Dim adapter As New SQLiteDataAdapter(cmd)
             Dim dt As DataTable = New DataTable
             adapter.Fill(dt)
 
             grid.ItemsSource = dt.DefaultView()
-
-
         End Using
     End Function
-
-
 End Module
