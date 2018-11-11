@@ -17,36 +17,7 @@ Module GetData
         MessageBox.Show("Show the employee here")
     End Sub
 
-    'Public Sub GetEmployee(emp As Employee, cbx As ComboBox)
-    '    Try
-    '        Dim cmd As SQLiteCommand = Nothing
-    '        Dim employees As New List(Of Employee)()
-    '        Dim entity As Employee = Nothing
 
-    '        'mycommand = New SqlCommand("insert into tbl_cus([name],[class],[phone],[address]) 
-    '        'values('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "','" & TextBox4.Text & "')", myconnection)
-    '        cmd = New SQLiteCommand("INSERT INTO Employees ([Name], [Type], [Title], [PayRate])
-    '                                VALUES ('" & emp.Name & "','" & emp.Type & "','" & emp.Title & "','" & Convert.ToDouble(emp.PayRate))
-
-
-    '        Using conn As SQLiteConnection = New SQLiteConnection("Data Source=DATA\main.db3;Version=3")
-    '            cmd.Connection = conn
-    '            cmd.Connection.Open()
-    '            'MessageBox.Show("Connection established")
-    '            Dim adapter As New SQLiteDataAdapter(cmd)
-    '            MessageBox.Show("New Row Inserted")
-
-    '            Dim dt As DataTable = New DataTable
-    '            adapter.Fill(dt)
-    '            cbx.ItemsSource = dt.DefaultView
-    '            'TestGrid.ItemsSource = dt.DefaultView
-
-
-    '        End Using
-    '    Catch ex As Exception
-    '        System.Windows.MessageBox.Show(ex.Message)
-    '    End Try
-    'End Sub
 
     Public Sub InsertEmployee(emp As Employee)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
@@ -147,6 +118,27 @@ Module GetData
         End Using
     End Function
 
+    Public Sub UpdateEmployee(employee As Employee)
+        'TODO this will only work with the same name because we dont have a employee number var
+        Dim cmd As SQLiteCommand = Nothing
+        '"INSERT INTO Employees(Name, Type, Title, PayRate, Active) VALUES (@Name, @Type, @Title, @Pay, @Active)"
+        cmd = New SQLiteCommand("Update Employees SET Type = @NewType, Title = @NewTitle, PayRate = @NewPayRate WHERE Name= @Name")
+        'UPDATE Customers
+        'SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+        'WHERE CustomerID = 1;
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = employee.Name
+            cmd.Parameters.Add("@NewType", SqlDbType.VarChar).Value = employee.Type
+            cmd.Parameters.Add("@NewTitle", SqlDbType.VarChar).Value = employee.Title
+            cmd.Parameters.Add("@NewPayRate", SqlDbType.Real).Value = employee.PayRate
+
+            cmd.ExecuteNonQuery()
+            MessageBox.Show(employee.Name + " has been changed")
+
+        End Using
+    End Sub
     Public Function FindEmployee(query As Integer, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 

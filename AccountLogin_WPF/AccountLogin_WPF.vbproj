@@ -90,6 +90,9 @@
     <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
       <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\EditEmployeeDetails.xaml.vb">
+      <DependentUpon>EditEmployeeDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\EmployeeWindows\ChangeEmployee.xaml.vb">
       <DependentUpon>ChangeEmployee.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="User Controls\ucRemoveProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditEmployeeDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

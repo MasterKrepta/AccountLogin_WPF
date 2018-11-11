@@ -14,12 +14,13 @@
         <StackPanel Grid.Column="0">
             <Label Content="Enter Employee Name"/>
             <Button Name="btnGet" Content="Get Employee"/>
+            <Button Name="btnChange" Content="Edit Employee Details"/>
             <Button Name="btnBack" Content="Back"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBox Name="searchBox" />
-            <DataGrid Name="SelectedPart" Height="200"/>
-            <Button Name="btnConfirm" Content="Confirm Change"/>
+            <DataGrid Name="SelectedEmployee" Height="200"/>
+            
             <Button Name="btnClear" Content="Clear"/>
 
         </StackPanel>
