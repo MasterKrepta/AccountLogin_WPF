@@ -43,4 +43,9 @@ Public Class ProductionManagement
         Dim createJob As New CreateJob()
         Utilities.ShowHide(Me, createJob)
     End Sub
+
+    Private Sub btnQuery_Click(sender As Object, e As RoutedEventArgs) Handles btnQuery.Click
+        Dim queryJob As New QueryJob()
+        Utilities.ShowHide(Me, queryJob)
+    End Sub
 End Class

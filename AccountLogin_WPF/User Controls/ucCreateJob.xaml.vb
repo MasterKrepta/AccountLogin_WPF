@@ -12,7 +12,7 @@ Public Class ucCreateJob
         Dim newJob As New Job()
 
         newJob.SalesNum = newNum.Text
-        newJob.ProductSold = newProd.Text
+        newJob.ProductSold = GetData.ConvertToProduct(newProd.Text)
         newJob.QtySold = newQty.Text
         newJob.TotalMatCost = newCost.Text
         newJob.FinalSale = newSalePrice.Text

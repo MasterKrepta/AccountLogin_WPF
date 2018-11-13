@@ -91,7 +91,8 @@ Module GetData
                 While reader.Read()
                     Dim newJob As Job = New Job()
                     newJob.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    newJob.ProductSold = reader("ProductSold")
+                    Dim prodNum As String = Convert.ToString(reader("ProductSold"))
+                    newJob.ProductSold = GetData.ConvertToProduct(prodNum)
                     newJob.QtySold = Convert.ToInt32(reader("QtySold"))
                     newJob.TotalMatCost = Convert.ToDouble(reader("TotalMatCost"))
                     newJob.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
@@ -110,6 +111,16 @@ Module GetData
             cmd.Connection.Open()
             cmd.Parameters.Add("@Query", SqlDbType.Int).Value = query
 
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim job As New Job()
+                    job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
+                    ' job.ProductSold = New Product()
+                    job.QtySold = Convert.ToInt32(reader("QtySold"))
+                    job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
+
+                End While
+            End Using
             Dim adapter As New SQLiteDataAdapter(cmd)
             Dim dt As DataTable = New DataTable
             adapter.Fill(dt)
@@ -153,6 +164,33 @@ Module GetData
             adapter.Fill(dt)
 
             grid.ItemsSource = dt.DefaultView()
+        End Using
+    End Function
+
+    Public Function ConvertToProduct(query As String)
+        Dim cmd As SQLiteCommand = Nothing
+        'Dim product As New Product()
+
+        cmd = New SQLiteCommand("SELECT * FROM Products WHERE Name = @Query")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim product As New Product(Convert.ToString(reader("Name")), Convert.ToString(reader("Description")),
+                                               Convert.ToString(reader("Location")), Convert.ToDouble(reader("Cost")),
+                                            Convert.ToDouble(reader("SalePrice")), Convert.ToInt32(reader("QtyOnHand")))
+                    'product.Name = Convert.ToString(reader("Name"))
+                    'product.Desc = Convert.ToString(reader("Description"))
+                    'product.Location = Convert.ToString(reader("Location"))
+                    'product.Cost = Convert.ToDouble(reader("Cost"))
+                    'product.SalePrice = Convert.ToDouble(reader("SalePrice"))
+                    'product.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
+                    Return product
+                End While
+            End Using
         End Using
     End Function
 End Module

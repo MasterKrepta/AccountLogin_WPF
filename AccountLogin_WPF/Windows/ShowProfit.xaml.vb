@@ -25,7 +25,7 @@ Public Class ShowProfit
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         Dim main = New MainWindow()
-        Dim parent = Utilities.GetParentWindow(Me)
-        Utilities.ShowHide(parent, main)
+
+        Utilities.ShowHide(Me, main)
     End Sub
 End Class
