@@ -26,14 +26,10 @@
         <Label Content="Sale Number" Grid.Column="0" Grid.Row="0"/>
         <Label Content="Product Sold" Grid.Column="0" Grid.Row="1"/>
         <Label Content="Qty" Grid.Column="0" Grid.Row="2"/>
-        <Label Content="Material Cost" Grid.Column="0" Grid.Row="3"/>
-        <Label Content="Final Sale Price" Grid.Column="0" Grid.Row="4"/>
 
         <TextBox Name="newNum" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
         <TextBox Name="newProd" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
         <TextBox Name="newQty" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"/>
-        <TextBox Name="newCost" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <TextBox Name="newSalePrice" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"/>
 
         <StackPanel Grid.Column="0" Grid.Row="6">
             <Button Name="btnCreate" Content="Create Job" Height="40"/>

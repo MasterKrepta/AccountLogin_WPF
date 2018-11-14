@@ -25,9 +25,13 @@
         <TextBox Name="txtQuery" Grid.Column="1" Grid.Row="0"/>
         
         <StackPanel Grid.Column="0" Grid.Row="5">
-            <Button Name="btnComplete" Content="Complete Job" Height="100"/>
+            <Button Name="btnFind" Content="Find Job" Height="100"/>
             <Button Name="btnCancel" Content="Cancel" Height="100"/>
         </StackPanel>
-        <DataGrid Name="completeJob" Grid.Column="1" Grid.Row="5"/>
+        <StackPanel Grid.Column="1" Grid.Row="6">
+            <DataGrid Name="completeJob" Grid.Column="1" Grid.Row="5" MinHeight="100"/>
+            <Button Name="btnComplete" Content="Complete Job" Height="100"/>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

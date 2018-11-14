@@ -60,6 +60,30 @@ Module GetData
         End Using
     End Sub
 
+    Public Function GetProduct(prodName As String)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim query As String = "SELECT * FROM Products WHERE Name = @Query"
+            Dim cmd As New SQLiteCommand(query, conn)
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = prodName
+            conn.Open()
+            cmd.ExecuteNonQuery()
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim prod As New Product()
+                While reader.Read()
+                    prod.Name = Convert.ToString(reader("Name")).ToUpper()
+                    prod.Desc = Convert.ToString(reader("Description"))
+                    prod.Location = Convert.ToString(reader("Location"))
+                    prod.Cost = Convert.ToDouble(reader("Cost"))
+                    prod.SalePrice = Convert.ToDouble(reader("Cost"))
+                    prod.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
+                    Return prod
+                    'TODO Manage Error Handleing
+                End While
+            End Using
+            conn.Close()
+        End Using
+    End Function
     Public Sub InsertJob(job As Job)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
             Dim insertString As String = "INSERT INTO Sales(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
@@ -67,7 +91,8 @@ Module GetData
             Dim cmd As New SQLiteCommand(insertString, conn)
 
             cmd.Parameters.Add("@SaleNum", SqlDbType.Int).Value = job.SalesNum
-            cmd.Parameters.Add("@Product", SqlDbType.VarChar).Value = job.ProductSold
+            cmd.Parameters.Add("@Product", SqlDbType.VarChar).Value = job.ProductSold.Name
+
             cmd.Parameters.Add("@Qty", SqlDbType.VarChar).Value = job.QtySold
             cmd.Parameters.Add("@TotalCost", SqlDbType.Real).Value = job.TotalMatCost
             cmd.Parameters.Add("@FinalSale", SqlDbType.Real).Value = job.FinalSale
@@ -82,14 +107,14 @@ Module GetData
     Public Function GetFinalJobs()
         Dim cmd As SQLiteCommand = Nothing
 
-        cmd = New SQLiteCommand("SELECT * FROM Sales")
+        cmd = New SQLiteCommand("SELECT * FROM CompletedJobs")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim newJob As Job = New Job()
                 While reader.Read()
-                    Dim newJob As Job = New Job()
                     newJob.SalesNum = Convert.ToInt32(reader("SaleNumber"))
                     Dim prodNum As String = Convert.ToString(reader("ProductSold"))
                     newJob.ProductSold = GetData.ConvertToProduct(prodNum)
@@ -107,15 +132,16 @@ Module GetData
 
         cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            Dim job As New Job()
             cmd.Connection = conn
             cmd.Connection.Open()
             cmd.Parameters.Add("@Query", SqlDbType.Int).Value = query
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
                 While reader.Read()
-                    Dim job As New Job()
-                    job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    ' job.ProductSold = New Product()
+
+                    Job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
+                    job.ProductSold = ConvertToProduct(reader("ProductSold"))
                     job.QtySold = Convert.ToInt32(reader("QtySold"))
                     job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
 
@@ -126,6 +152,7 @@ Module GetData
             adapter.Fill(dt)
 
             grid.ItemsSource = dt.DefaultView()
+            Return job
         End Using
     End Function
 
@@ -150,6 +177,7 @@ Module GetData
 
         End Using
     End Sub
+
     Public Function FindEmployee(query As Integer, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
@@ -178,19 +206,59 @@ Module GetData
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim product As New Product()
                 While reader.Read()
-                    Dim product As New Product(Convert.ToString(reader("Name")), Convert.ToString(reader("Description")),
-                                               Convert.ToString(reader("Location")), Convert.ToDouble(reader("Cost")),
-                                            Convert.ToDouble(reader("SalePrice")), Convert.ToInt32(reader("QtyOnHand")))
-                    'product.Name = Convert.ToString(reader("Name"))
-                    'product.Desc = Convert.ToString(reader("Description"))
-                    'product.Location = Convert.ToString(reader("Location"))
-                    'product.Cost = Convert.ToDouble(reader("Cost"))
-                    'product.SalePrice = Convert.ToDouble(reader("SalePrice"))
-                    'product.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
+                    'Dim product As New Product(Convert.ToString(reader("Name")).ToUpper(), Convert.ToString(reader("Description")),
+                    'Convert.ToString(reader("Location")), Convert.ToDouble(reader("Cost")),
+                    'Convert.ToDouble(reader("SalePrice")), Convert.ToInt32(reader("QtyOnHand")))
+                    product.Name = Convert.ToString(reader("Name"))
+                    product.Desc = Convert.ToString(reader("Description"))
+                    product.Location = Convert.ToString(reader("Location"))
+                    product.Cost = Convert.ToDouble(reader("Cost"))
+                    product.SalePrice = Convert.ToDouble(reader("SalePrice"))
+                    product.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
                     Return product
                 End While
             End Using
         End Using
     End Function
+
+    Public Sub CompleteJob(job As Job)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = "INSERT INTO CompletedJobs(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
+                                                    VALUES (@SaleNum, @Product, @Qty, @TotalCost, @FinalSale)"
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@SaleNum", SqlDbType.Int).Value = job.SalesNum
+            cmd.Parameters.Add("@Product", SqlDbType.VarChar).Value = job.ProductSold.Name
+
+            cmd.Parameters.Add("@Qty", SqlDbType.VarChar).Value = job.QtySold
+            cmd.Parameters.Add("@TotalCost", SqlDbType.Real).Value = job.TotalMatCost
+            cmd.Parameters.Add("@FinalSale", SqlDbType.Real).Value = job.FinalSale
+
+            conn.Open()
+            'ADD to completed Jobs
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been Completed")
+            FinalizedJobs.Add(job)
+            'Remove from the active sales jobs
+            RemoveJob(job)
+            conn.Close()
+        End Using
+    End Sub
+
+    Public Sub RemoveJob(job As Job)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = "DELETE FROM Sales WHERE @Query"
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@Query", SqlDbType.Int).Value = job.SalesNum
+
+            conn.Open()
+            cmd.ExecuteNonQuery()
+            MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been added")
+
+            conn.Close()
+        End Using
+    End Sub
 End Module

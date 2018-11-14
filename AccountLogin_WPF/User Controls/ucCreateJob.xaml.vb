@@ -10,15 +10,24 @@ Public Class ucCreateJob
     End Sub
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         Dim newJob As New Job()
+        Try
+            newJob.SalesNum = newNum.Text
+            newJob.ProductSold = GetData.GetProduct(newProd.Text)
+            newJob.QtySold = newQty.Text
 
-        newJob.SalesNum = newNum.Text
-        newJob.ProductSold = GetData.ConvertToProduct(newProd.Text)
-        newJob.QtySold = newQty.Text
-        newJob.TotalMatCost = newCost.Text
-        newJob.FinalSale = newSalePrice.Text
-
-        GetData.FinalizedJobs.Add(newJob)
-        GetData.InsertJob(newJob)
-
+            newJob.TotalMatCost = newJob.ProductSold.Cost
+            newJob.FinalSale = CalculateTotalSale(newJob.ProductSold, newJob.QtySold)
+            GetData.FinalizedJobs.Add(newJob)
+            GetData.InsertJob(newJob)
+        Catch ex As Exception
+            MessageBox.Show("Product " + newProd.Text + " is not found.")
+            Return
+        End Try
     End Sub
+
+
+    Function CalculateTotalSale(productSold As Product, qtySold As Integer)
+        Dim sum As Double = productSold.SalePrice * qtySold
+        Return sum
+    End Function
 End Class
