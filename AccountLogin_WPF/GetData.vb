@@ -17,7 +17,45 @@ Module GetData
         MessageBox.Show("Show the employee here")
     End Sub
 
+    Public Sub UpdateEmployee(employee As Employee)
+        'TODO this will only work with the same name because we dont have a employee number var
+        Dim cmd As SQLiteCommand = Nothing
+        '"INSERT INTO Employees(Name, Type, Title, PayRate, Active) VALUES (@Name, @Type, @Title, @Pay, @Active)"
+        cmd = New SQLiteCommand("Update Employees SET Type = @NewType, Title = @NewTitle, PayRate = @NewPayRate, Active = @Active WHERE Name= @Name")
+        'UPDATE Customers
+        'SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+        'WHERE CustomerID = 1;
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = employee.Name
+            cmd.Parameters.Add("@NewType", SqlDbType.VarChar).Value = employee.Type
+            cmd.Parameters.Add("@NewTitle", SqlDbType.VarChar).Value = employee.Title
+            cmd.Parameters.Add("@NewPayRate", SqlDbType.Real).Value = employee.PayRate
+            cmd.Parameters.Add("@Active", SqlDbType.Bit).Value = employee.Active
 
+            cmd.ExecuteNonQuery()
+            MessageBox.Show(employee.Name + " has been changed")
+
+        End Using
+    End Sub
+
+    Public Function FindEmployee(query As Integer, grid As DataGrid)
+        Dim cmd As SQLiteCommand = Nothing
+
+        cmd = New SQLiteCommand("SELECT * FROM Employees WHERE Name = @Query")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query.ToString()
+
+            Dim adapter As New SQLiteDataAdapter(cmd)
+            Dim dt As DataTable = New DataTable
+            adapter.Fill(dt)
+
+            grid.ItemsSource = dt.DefaultView()
+        End Using
+    End Function
 
     Public Sub InsertEmployee(emp As Employee)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
@@ -156,44 +194,7 @@ Module GetData
         End Using
     End Function
 
-    Public Sub UpdateEmployee(employee As Employee)
-        'TODO this will only work with the same name because we dont have a employee number var
-        Dim cmd As SQLiteCommand = Nothing
-        '"INSERT INTO Employees(Name, Type, Title, PayRate, Active) VALUES (@Name, @Type, @Title, @Pay, @Active)"
-        cmd = New SQLiteCommand("Update Employees SET Type = @NewType, Title = @NewTitle, PayRate = @NewPayRate WHERE Name= @Name")
-        'UPDATE Customers
-        'SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-        'WHERE CustomerID = 1;
-        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
-            cmd.Connection = conn
-            cmd.Connection.Open()
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = employee.Name
-            cmd.Parameters.Add("@NewType", SqlDbType.VarChar).Value = employee.Type
-            cmd.Parameters.Add("@NewTitle", SqlDbType.VarChar).Value = employee.Title
-            cmd.Parameters.Add("@NewPayRate", SqlDbType.Real).Value = employee.PayRate
 
-            cmd.ExecuteNonQuery()
-            MessageBox.Show(employee.Name + " has been changed")
-
-        End Using
-    End Sub
-
-    Public Function FindEmployee(query As Integer, grid As DataGrid)
-        Dim cmd As SQLiteCommand = Nothing
-
-        cmd = New SQLiteCommand("SELECT * FROM Employees WHERE Name = @Query")
-        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
-            cmd.Connection = conn
-            cmd.Connection.Open()
-            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query.ToString()
-
-            Dim adapter As New SQLiteDataAdapter(cmd)
-            Dim dt As DataTable = New DataTable
-            adapter.Fill(dt)
-
-            grid.ItemsSource = dt.DefaultView()
-        End Using
-    End Function
 
     Public Function ConvertToProduct(query As String)
         Dim cmd As SQLiteCommand = Nothing
@@ -208,9 +209,7 @@ Module GetData
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
                 Dim product As New Product()
                 While reader.Read()
-                    'Dim product As New Product(Convert.ToString(reader("Name")).ToUpper(), Convert.ToString(reader("Description")),
-                    'Convert.ToString(reader("Location")), Convert.ToDouble(reader("Cost")),
-                    'Convert.ToDouble(reader("SalePrice")), Convert.ToInt32(reader("QtyOnHand")))
+
                     product.Name = Convert.ToString(reader("Name"))
                     product.Desc = Convert.ToString(reader("Description"))
                     product.Location = Convert.ToString(reader("Location"))

@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccountLogin_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="OnLoad">
+        Title="MainWindow" Height="450" Width="800" 
+        Style="{StaticResource Default}"
+        Loaded="OnLoad" Background="#FF94BAE8">
     
 
     <Window.Resources>
         
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>

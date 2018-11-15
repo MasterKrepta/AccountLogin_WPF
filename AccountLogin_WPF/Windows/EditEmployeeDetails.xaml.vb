@@ -17,7 +17,7 @@ Public Class EditEmployeeDetails
         employee.Type = newType.Text
         employee.Title = newTitle.Text
         employee.PayRate = Convert.ToDouble(newPay.Text)
-        'TODO active settings
+        employee.Active = cbxActive.IsChecked
         GetData.UpdateEmployee(employee)
         Me.Close()
     End Sub

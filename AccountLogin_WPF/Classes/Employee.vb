@@ -13,6 +13,7 @@ Public Class Employee
     Public Type As String
     Public Title As String
     Public PayRate As Double
+    Public Active As Boolean
 
     Public Sub New()
 
@@ -22,6 +23,7 @@ Public Class Employee
         Me.Type = type
         Me.Title = title
         Me.PayRate = pay
+        Me.Active = True
         'TODO Add this to the data employees list/ Wichi is the database in this version
     End Sub
 
