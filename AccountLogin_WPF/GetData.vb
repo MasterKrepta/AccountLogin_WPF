@@ -11,6 +11,7 @@ Module GetData
     Public connPath As String = String.Format("Data Source={0}", fullPath)
     'TODO This affects the file in the debug folder, is this correct or do I need to tweak it for final release
 
+    Public OpenJobs As List(Of Job) = New List(Of Job)
     Public FinalizedJobs As List(Of Job) = New List(Of Job)
 
     Friend Sub ShowEmployee(emp As Employee)
@@ -107,49 +108,90 @@ Module GetData
                                                                 @raw_04, @raw_05, @Cost, @SalePrice)"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = fin.finName.ToUpper()
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = fin.Name.ToUpper()
             cmd.Parameters.Add("@raw_01", SqlDbType.VarChar).Value = fin.rawMaterials(0).Name
             cmd.Parameters.Add("@raw_02", SqlDbType.VarChar).Value = fin.rawMaterials(1).Name
             cmd.Parameters.Add("@raw_03", SqlDbType.VarChar).Value = fin.rawMaterials(2).Name
             cmd.Parameters.Add("@raw_04", SqlDbType.VarChar).Value = fin.rawMaterials(3).Name
             cmd.Parameters.Add("@raw_05", SqlDbType.VarChar).Value = fin.rawMaterials(4).Name
-            cmd.Parameters.Add("@Cost", SqlDbType.Real).Value = fin.matCost
+            cmd.Parameters.Add("@Cost", SqlDbType.Real).Value = fin.Cost
             cmd.Parameters.Add("@SalePrice", SqlDbType.Real).Value = fin.SalePrice
 
             conn.Open()
             cmd.ExecuteNonQuery()
-            MessageBox.Show(fin.finName + " has been added")
+            MessageBox.Show(fin.Name + " has been added")
 
             conn.Close()
         End Using
     End Sub
-    Public Function GetProduct(prodName As String)
+
+    Public Function GetRawMaterial(prodName As String)
+        'TODO make this work for both raw materials and finished goods
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim query As String = "SELECT * FROM RawMaterials WHERE Name = @Query"
-            Dim cmd As New SQLiteCommand(query, conn)
+            Dim rawQuery As String = "SELECT * FROM RawMaterials WHERE Name = @Query"
+
+            Dim cmd As New SQLiteCommand(rawQuery, conn)
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = prodName
             conn.Open()
             cmd.ExecuteNonQuery()
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                Dim prod As New RawMaterial()
+                Dim prod = New RawMaterial()
                 While reader.Read()
-                    prod.Name = Convert.ToString(reader("Name")).ToUpper()
-                    prod.Desc = Convert.ToString(reader("Description"))
-                    prod.Location = Convert.ToString(reader("Location"))
-                    prod.Cost = Convert.ToDouble(reader("Cost"))
-                    prod.SalePrice = Convert.ToDouble(reader("Cost"))
-                    prod.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
-                    Return prod
+                    Try
+                        prod.Name = Convert.ToString(reader("Name")).ToUpper()
+                        prod.Desc = Convert.ToString(reader("Description"))
+                        prod.Location = Convert.ToString(reader("Location"))
+                        prod.Cost = Convert.ToDouble(reader("Cost"))
+                        prod.SalePrice = Convert.ToDouble(reader("Cost"))
+                        prod.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
+                        Return prod
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message)
+                    End Try
+
                     'TODO Manage Error Handleing
                 End While
             End Using
             conn.Close()
         End Using
     End Function
+
+    Public Function GetFinishedGood(prodName As String)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim finQuery As String = "SELECT * FROM FinishedGoods WHERE FinishedName = @Query"
+
+            Dim cmd As New SQLiteCommand(finQuery, conn)
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = prodName
+            conn.Open()
+            cmd.ExecuteNonQuery()
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim fin As New FinishedGood()
+                While reader.Read()
+
+                    fin.Name = Convert.ToString(reader("FinishedName")).ToUpper()
+
+                    fin.rawMaterials(0) = ConvertToRawMat(reader("RawMaterial_01"))
+                    fin.rawMaterials(1) = ConvertToRawMat(reader("RawMaterial_02"))
+                    fin.rawMaterials(2) = ConvertToRawMat(reader("RawMaterial_03"))
+                    fin.rawMaterials(3) = ConvertToRawMat(reader("RawMaterial_04"))
+                    fin.rawMaterials(4) = ConvertToRawMat(reader("RawMaterial_05"))
+                    fin.Cost = Convert.ToDouble(reader("MatCost"))
+                    fin.SalePrice = Convert.ToDouble(reader("SalePrice"))
+
+                    Return fin
+                    'TODO Manage Error Handleing
+                End While
+            End Using
+            conn.Close()
+        End Using
+
+    End Function
+
     Public Sub InsertJob(job As Job)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim insertString As String = "INSERT INTO Sales(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
+            Dim insertString As String = "INSERT INTO OpenJobs(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
                                                     VALUES (@SaleNum, @Product, @Qty, @TotalCost, @FinalSale)"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
@@ -163,14 +205,45 @@ Module GetData
             conn.Open()
             cmd.ExecuteNonQuery()
             MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been added")
-
+            OpenJobs.Add(job)
             conn.Close()
         End Using
     End Sub
     Public Function GetFinalJobs()
+        FinalizedJobs.Clear()
         Dim cmd As SQLiteCommand = Nothing
 
         cmd = New SQLiteCommand("SELECT * FROM CompletedJobs")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim newJob As Job = New Job()
+                While reader.Read()
+                    newJob.SalesNum = Convert.ToInt32(reader("SaleNumber"))
+                    Dim prodNum As String = Convert.ToString(reader("ProductSold"))
+
+                    Try
+                        newJob.ProductSold = ConvertToRawMat(reader("ProductSold"))
+                    Catch ex As Exception
+                        newJob.ProductSold = ConvertToFinishedGood(reader("ProductSold"))
+                    End Try
+
+                    newJob.QtySold = Convert.ToInt32(reader("QtySold"))
+                    newJob.TotalMatCost = Convert.ToDouble(reader("TotalMatCost"))
+                    newJob.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
+                    FinalizedJobs.Add(newJob)
+                End While
+            End Using
+        End Using
+    End Function
+
+    Public Function GetOpenJobs()
+        OpenJobs.Clear()
+        Dim cmd As SQLiteCommand = Nothing
+
+        cmd = New SQLiteCommand("SELECT * FROM OpenJobs")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
@@ -184,7 +257,7 @@ Module GetData
                     newJob.QtySold = Convert.ToInt32(reader("QtySold"))
                     newJob.TotalMatCost = Convert.ToDouble(reader("TotalMatCost"))
                     newJob.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
-                    FinalizedJobs.Add(newJob)
+                    OpenJobs.Add(newJob)
                 End While
             End Using
         End Using
@@ -193,7 +266,7 @@ Module GetData
     Public Function FindJob(query As Integer, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
-        cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM OpenJobs WHERE SaleNumber = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             Dim job As New Job()
             cmd.Connection = conn
@@ -204,7 +277,12 @@ Module GetData
                 While reader.Read()
 
                     job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    job.ProductSold = ConvertToRawMat(reader("ProductSold"))
+                    Try
+                        job.ProductSold = ConvertToRawMat(reader("ProductSold"))
+                    Catch ex As Exception
+                        job.ProductSold = ConvertToFinishedGood(reader("ProductSold"))
+                    End Try
+
                     job.QtySold = Convert.ToInt32(reader("QtySold"))
                     job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
 
@@ -230,21 +308,40 @@ Module GetData
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                Dim product As New RawMaterial()
+                Dim product As New Sellable()
                 While reader.Read()
-
                     product.Name = Convert.ToString(reader("Name"))
-                    product.Desc = Convert.ToString(reader("Description"))
-                    product.Location = Convert.ToString(reader("Location"))
                     product.Cost = Convert.ToDouble(reader("Cost"))
                     product.SalePrice = Convert.ToDouble(reader("SalePrice"))
-                    product.QtyOnHand = Convert.ToInt32(reader("QtyOnHand"))
+
                     Return product
                 End While
             End Using
         End Using
     End Function
 
+    Public Function ConvertToFinishedGood(query As String)
+        Dim cmd As SQLiteCommand = Nothing
+        'Dim product As New Product()
+
+        cmd = New SQLiteCommand("SELECT * FROM FinishedGood WHERE FinishedName = @Query")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+            cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Dim product As New Sellable()
+                While reader.Read()
+                    product.Name = Convert.ToString(reader("Name"))
+                    product.Cost = Convert.ToDouble(reader("Cost"))
+                    product.SalePrice = Convert.ToDouble(reader("SalePrice"))
+
+                    Return product
+                End While
+            End Using
+        End Using
+    End Function
     Public Sub CompleteJob(job As Job)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
             Dim insertString As String = "INSERT INTO CompletedJobs(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 
@@ -271,7 +368,7 @@ Module GetData
 
     Public Sub RemoveJob(job As Job)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim insertString As String = "DELETE FROM Sales WHERE @Query"
+            Dim insertString As String = "DELETE FROM OpenJobs WHERE @Query"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
             cmd.Parameters.Add("@Query", SqlDbType.Int).Value = job.SalesNum
@@ -279,7 +376,7 @@ Module GetData
             conn.Open()
             cmd.ExecuteNonQuery()
             MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been added")
-
+            OpenJobs.Remove(job)
             conn.Close()
         End Using
     End Sub

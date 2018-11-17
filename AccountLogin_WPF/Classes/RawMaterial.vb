@@ -1,10 +1,8 @@
 Public Class RawMaterial
+    Inherits Sellable
 
-    Public Name As String
     Public Desc As String
     Public Location As String
-    Public Cost As Double
-    Public SalePrice As Double
     Public QtyOnHand As Integer
 
     Public Sub New()

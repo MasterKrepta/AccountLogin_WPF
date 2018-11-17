@@ -8,7 +8,7 @@ Public Class ProductionManagement
             Dim employees As New List(Of Employee)()
             Dim entity As Employee = Nothing
 
-            cmd = New SQLiteCommand("SELECT * FROM Sales")
+            cmd = New SQLiteCommand("SELECT * FROM CompletedJobs")
             Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
                 cmd.Connection = conn
                 cmd.Connection.Open()

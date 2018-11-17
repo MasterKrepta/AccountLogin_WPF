@@ -21,10 +21,10 @@
         <Image Source="/AccountLogin_WPF;component/Images/malishLogoMini.png" MaxWidth="100"/>
         <TextBox Text="Show Profit" TextAlignment="Center" FontSize="20" Grid.Column="1"/>
         <StackPanel Grid.Column="1" Grid.Row="1">
-            <TextBlock Name="txtNumSales" Text="Number Of Sales:" FontSize="30"/>
-            <TextBlock Name="txtSales" Text="Total Sales:" FontSize="30"/>
-            <TextBlock Name="txtCost" Text="Total Cost:" FontSize="30"/>
-            <TextBlock Name="txtProfits" Text="Total Profits:" FontSize="30"/>
+            <TextBlock Name="txtNumSales" Text="Number Of Sales:" />
+            <TextBlock Name="txtSales" Text="Total Sales:" />
+            <TextBlock Name="txtCost" Text="Total Cost:" />
+            <TextBlock Name="txtProfits" Text="Total Profits:" />
             <Button Name="btnBack" Content="Back" FontSize="60" Height="100"/>
         </StackPanel>
     </Grid>

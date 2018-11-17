@@ -76,6 +76,7 @@
     <Compile Include="Classes\FinishedGood.vb" />
     <Compile Include="Classes\Job.vb" />
     <Compile Include="Classes\RawMaterial.vb" />
+    <Compile Include="Classes\Sellable.vb" />
     <Compile Include="User Controls\ucChangeEmployee.xaml.vb">
       <DependentUpon>ucChangeEmployee.xaml</DependentUpon>
     </Compile>

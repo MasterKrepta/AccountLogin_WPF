@@ -14,7 +14,8 @@ Public Class ucCompleteJob
         Try
             GetData.CompleteJob(foundJob)
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+
+            MessageBox.Show("job not found::: " + ex.Message)
         End Try
 
     End Sub
