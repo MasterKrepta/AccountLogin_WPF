@@ -48,4 +48,14 @@ Public Class ProductionManagement
         Dim queryJob As New QueryJob()
         Utilities.ShowHide(Me, queryJob)
     End Sub
+
+    Private Sub btnCardex_Click(sender As Object, e As RoutedEventArgs) Handles btnCardex.Click
+        Dim cardex As New Cardex()
+        Utilities.ShowHide(Me, cardex)
+    End Sub
+
+    Private Sub btnCreateFinished_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateFinished.Click
+        Dim finishedGood As New CreateFinishedGood()
+        Utilities.ShowHide(Me, finishedGood)
+    End Sub
 End Class

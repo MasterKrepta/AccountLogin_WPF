@@ -1,22 +1,26 @@
 Imports System.Data
 Imports System.Data.SQLite
 
-Public Class QueryJob
-    'Dim job As New Job()
+Public Class Cardex
+    Dim product As New RawMaterial()
+
     Private Sub btnGet_Click(sender As Object, e As RoutedEventArgs) Handles btnGet.Click
-        Dim jobNum As String
+        Dim prodName As String
 
         If Not searchBox.Text Is Nothing Then
-            jobNum = searchBox.Text
+            prodName = searchBox.Text
         End If
 
-        DisplaySearch(jobNum, SelectedJob)
+        DisplaySearch(prodName, cardexResults)
     End Sub
+
     Sub DisplaySearch(query As String, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
         'cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
-        cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM Products JOIN CompletedJobs
+                                    ON Name = ProductSold
+                                WHERE Name = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
@@ -24,11 +28,6 @@ Public Class QueryJob
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
                 While reader.Read()
-                    Dim job As New Job()
-                    job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    job.ProductSold = GetData.ConvertToRawMat(reader("ProductSold"))
-                    job.QtySold = Convert.ToInt32(reader("QtySold"))
-                    job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
 
                 End While
             End Using
@@ -41,11 +40,10 @@ Public Class QueryJob
         End Using
     End Sub
 
-
     Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
         searchBox.Clear()
-        SelectedJob.ItemsSource = Nothing
-        'job = New Job()
+        cardexResults.ItemsSource = Nothing
+        product = New RawMaterial()
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click

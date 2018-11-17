@@ -26,7 +26,7 @@ Public Class ucCreateJob
     End Sub
 
 
-    Function CalculateTotalSale(productSold As Product, qtySold As Integer)
+    Function CalculateTotalSale(productSold As RawMaterial, qtySold As Integer)
         Dim sum As Double = productSold.SalePrice * qtySold
         Return sum
     End Function

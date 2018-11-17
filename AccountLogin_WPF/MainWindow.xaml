@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" 
         Style="{StaticResource Default}"
-        Loaded="OnLoad" Background="#FF94BAE8">
+        Loaded="OnLoad" >
     
 
     <Window.Resources>

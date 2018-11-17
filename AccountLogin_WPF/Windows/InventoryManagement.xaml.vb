@@ -5,10 +5,10 @@ Public Class InventoryManagement
     Public Sub OnLoad(sender As Object, e As RoutedEventArgs)
         Try
             Dim cmd As SQLiteCommand = Nothing
-            Dim products As New List(Of Product)()
+            Dim products As New List(Of RawMaterial)()
             Dim entity As Employee = Nothing
 
-            cmd = New SQLiteCommand("SELECT * FROM Products")
+            cmd = New SQLiteCommand("SELECT * FROM RawMaterials")
             Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
                 cmd.Connection = conn
                 cmd.Connection.Open()

@@ -1,0 +1,49 @@
+<Window x:Class="CreateFinishedGood"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AccountLogin_WPF"
+        mc:Ignorable="d"
+        Title="CreateFinishedGood" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="103*"/>
+            <ColumnDefinition Width="544*"/>
+            <ColumnDefinition Width="153*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Part Number" Grid.Column="0" Grid.Row="0"/>
+        <Label Content="Raw Mat 1" Grid.Column="0" Grid.Row="1"/>
+        <Label Content="Raw Mat 2" Grid.Column="0" Grid.Row="2"/>
+        <Label Content="Raw Mat 3" Grid.Column="0" Grid.Row="3"/>
+        <Label Content="Raw Mat 4" Grid.Column="0" Grid.Row="4"/>
+        <Label Content="Raw Mat 5" Grid.Column="0" Grid.Row="5"/>
+        <Label Content="SalePrice" Grid.Column="0" Grid.Row="6"/>
+        <TextBox Name="newName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <TextBox Name="newRaw1" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBox Name="newRaw2" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <TextBox Name="newRaw3" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <TextBox Name="newRaw4" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <TextBox Name="newRaw5" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
+        <TextBox Name="newSalePrice" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2"/>
+        
+        <StackPanel Grid.Column="0" Grid.Row="8" Margin="0,0,0,97" Grid.RowSpan="2">
+            <Button Name="btnCreate" Content="Create" Height="40"/>
+            <Button x:Name="btnBack" Content="Cancel" Height="40"/>
+        </StackPanel>
+        <DataGrid Name="newFinishedGood" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" Margin="0,0,0,97" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

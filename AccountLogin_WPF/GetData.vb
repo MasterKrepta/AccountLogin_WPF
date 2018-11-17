@@ -77,9 +77,9 @@ Module GetData
         End Using
     End Sub
 
-    Public Sub InsertProduct(prod As Product)
+    Public Sub InsertProduct(prod As RawMaterial)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim insertString As String = "INSERT INTO Products(Name, Description, Location, Cost, SalePrice, QtyOnHand) 
+            Dim insertString As String = "INSERT INTO RawMaterials(Name, Description, Location, Cost, SalePrice, QtyOnHand) 
                                                         VALUES (@Name, @Desc, @Loc, @Cost, @SalePrice, @Qty)"
             Dim cmd As New SQLiteCommand(insertString, conn)
 
@@ -98,16 +98,41 @@ Module GetData
         End Using
     End Sub
 
+    Public Sub CreateFinshedGood(fin As FinishedGood)
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = "INSERT INTO FinishedGoods(FinishedName, RawMaterial_01, RawMaterial_02, 
+                                                                    RawMaterial_03, RawMaterial_04, RawMaterial_05,
+                                                                    MatCost, SalePrice) 
+                                                        VALUES (@Name, @raw_01, @raw_02, @raw_03, 
+                                                                @raw_04, @raw_05, @Cost, @SalePrice)"
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = fin.finName.ToUpper()
+            cmd.Parameters.Add("@raw_01", SqlDbType.VarChar).Value = fin.rawMaterials(0).Name
+            cmd.Parameters.Add("@raw_02", SqlDbType.VarChar).Value = fin.rawMaterials(1).Name
+            cmd.Parameters.Add("@raw_03", SqlDbType.VarChar).Value = fin.rawMaterials(2).Name
+            cmd.Parameters.Add("@raw_04", SqlDbType.VarChar).Value = fin.rawMaterials(3).Name
+            cmd.Parameters.Add("@raw_05", SqlDbType.VarChar).Value = fin.rawMaterials(4).Name
+            cmd.Parameters.Add("@Cost", SqlDbType.Real).Value = fin.matCost
+            cmd.Parameters.Add("@SalePrice", SqlDbType.Real).Value = fin.SalePrice
+
+            conn.Open()
+            cmd.ExecuteNonQuery()
+            MessageBox.Show(fin.finName + " has been added")
+
+            conn.Close()
+        End Using
+    End Sub
     Public Function GetProduct(prodName As String)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
-            Dim query As String = "SELECT * FROM Products WHERE Name = @Query"
+            Dim query As String = "SELECT * FROM RawMaterials WHERE Name = @Query"
             Dim cmd As New SQLiteCommand(query, conn)
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = prodName
             conn.Open()
             cmd.ExecuteNonQuery()
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                Dim prod As New Product()
+                Dim prod As New RawMaterial()
                 While reader.Read()
                     prod.Name = Convert.ToString(reader("Name")).ToUpper()
                     prod.Desc = Convert.ToString(reader("Description"))
@@ -155,7 +180,7 @@ Module GetData
                 While reader.Read()
                     newJob.SalesNum = Convert.ToInt32(reader("SaleNumber"))
                     Dim prodNum As String = Convert.ToString(reader("ProductSold"))
-                    newJob.ProductSold = GetData.ConvertToProduct(prodNum)
+                    newJob.ProductSold = GetData.ConvertToRawMat(prodNum)
                     newJob.QtySold = Convert.ToInt32(reader("QtySold"))
                     newJob.TotalMatCost = Convert.ToDouble(reader("TotalMatCost"))
                     newJob.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
@@ -178,8 +203,8 @@ Module GetData
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
                 While reader.Read()
 
-                    Job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    job.ProductSold = ConvertToProduct(reader("ProductSold"))
+                    job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
+                    job.ProductSold = ConvertToRawMat(reader("ProductSold"))
                     job.QtySold = Convert.ToInt32(reader("QtySold"))
                     job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
 
@@ -194,20 +219,18 @@ Module GetData
         End Using
     End Function
 
-
-
-    Public Function ConvertToProduct(query As String)
+    Public Function ConvertToRawMat(query As String)
         Dim cmd As SQLiteCommand = Nothing
         'Dim product As New Product()
 
-        cmd = New SQLiteCommand("SELECT * FROM Products WHERE Name = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM RawMaterials WHERE Name = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                Dim product As New Product()
+                Dim product As New RawMaterial()
                 While reader.Read()
 
                     product.Name = Convert.ToString(reader("Name"))
@@ -258,6 +281,27 @@ Module GetData
             MessageBox.Show("Work Order # " + job.SalesNum.ToString() + " has been added")
 
             conn.Close()
+        End Using
+    End Sub
+
+    Sub UpdateCardex(prod As RawMaterial, changedField As String, oldVal As String, newVal As String)
+        'TODO This needs planned out better, currently not changing products at all in this application
+        'I will need to change the system: What exactly do i want the cardex tracking
+        '1: Track changes using a join comparing changes between products
+        '2: Maybe we need an order pull system first to assign raw materials to work orders
+        Using conn As SQLiteConnection = New SQLiteConnection(connPath)
+            Dim insertString As String = ("INSERT INTO Cardex(Product, ChangedField, DateTime, OldValue, NewValue)
+                                             VALUES(@Product, @ChangedField, @DateTime, @OldValue, @NewValue)")
+            Dim cmd As New SQLiteCommand(insertString, conn)
+
+            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = prod.Name.ToUpper()
+            cmd.Parameters.Add("@ChangedField", SqlDbType.VarChar).Value = changedField
+            cmd.Parameters.Add("@DateTime", SqlDbType.Time).Value = DateTime.Now.ToShortDateString()
+            cmd.Parameters.Add("@OldValue", SqlDbType.VarChar).Value = oldVal
+            cmd.Parameters.Add("@NewValue", SqlDbType.VarChar).Value = newVal
+
+            conn.Open()
+            cmd.ExecuteNonQuery()
         End Using
     End Sub
 End Module

@@ -23,9 +23,11 @@
         <StackPanel Grid.Row="1" Margin="0,0,10,0" Grid.Column="1">
             <Line Stretch="Fill" Margin="0,10,0,10" Stroke="Black" X2="1"/>
             <Button Name="btnQuery" >Query Job Order</Button>
+            <Button Name="btnCreateFinished">Create Finished Good</Button>
             <Button Name="btnCreate">Create Job</Button>
             <Button Name="btnComplete">Complete Job</Button>
             <Button Name="btnProfits">Show Profits</Button>
+            <Button Name="btnCardex">Cardex</Button>
             <Button Name="btnBack">Back to Main Menu</Button>
             <DataGrid x:Name="TestGrid"  MaxHeight="140"
                         ScrollViewer.CanContentScroll="True"

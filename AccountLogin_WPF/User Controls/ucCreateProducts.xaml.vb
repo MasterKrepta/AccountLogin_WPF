@@ -7,7 +7,7 @@ Public Class ucCreateProducts
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
-        Dim prod As Product = New Product()
+        Dim prod As RawMaterial = New RawMaterial()
         Dim dg As DataGrid = newProduct '?This may be unused
 
         prod.Name = newName.Text

@@ -5,19 +5,19 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="Window" x:Key="Default">
-            <Setter Property="Background" Value="#FF51C3D4"/>
+            <!--<Setter Property="Background" Value="#FF51C3D4"/>-->
         </Style>
                
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Background" Value="#FF51C3D4"/>
+            <!--<Setter Property="Background" Value="#FF51C3D4"/>-->
         </Style>
 
         <Style TargetType="{x:Type TextBox}">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Height" Value="30"/>
-            <Setter Property="Background" Value="#FF51C3D4"/>
+            <!--<Setter Property="Background" Value="#FF51C3D4"/>-->
         </Style>
     </Application.Resources>
 </Application>

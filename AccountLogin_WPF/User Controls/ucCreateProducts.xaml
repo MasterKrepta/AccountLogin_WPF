@@ -36,7 +36,7 @@
         <TextBox Name="newSalePrice" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"/>
         <TextBox Name="newQty" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Column="0" Grid.Row="6">
-            <Button Name="btnCreate" Content="Create Product" Height="40"/>
+            <Button Name="btnCreate" Content="Create RawMaterial" Height="40"/>
             <Button x:Name="btnCancel" Content="Cancel" Height="40"/>
         </StackPanel>
         <DataGrid Name="newProduct" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2"/>

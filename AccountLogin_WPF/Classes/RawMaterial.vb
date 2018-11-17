@@ -1,4 +1,4 @@
-Public Class Product
+Public Class RawMaterial
 
     Public Name As String
     Public Desc As String
@@ -25,9 +25,9 @@ Public Class Product
     'Decrease Inventory
 
     Public Sub Description()
-        Console.WriteLine("Product Name: " + Name)
+        Console.WriteLine("Raw Material Name: " + Name)
         Console.WriteLine("-----------------------")
-        Console.WriteLine("Product Location: " + Location)
+        Console.WriteLine(" Location: " + Location)
         Console.WriteLine("Cost: " + Cost)
         Console.WriteLine("Sales Price: " + SalePrice)
         Console.WriteLine("QTY on hand: " + QtyOnHand)

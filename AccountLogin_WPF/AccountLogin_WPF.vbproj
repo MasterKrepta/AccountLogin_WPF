@@ -73,9 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Job - Copy.vb" />
+    <Compile Include="Classes\FinishedGood.vb" />
     <Compile Include="Classes\Job.vb" />
-    <Compile Include="Classes\Product.vb" />
+    <Compile Include="Classes\RawMaterial.vb" />
     <Compile Include="User Controls\ucChangeEmployee.xaml.vb">
       <DependentUpon>ucChangeEmployee.xaml</DependentUpon>
     </Compile>
@@ -91,11 +91,17 @@
     <Compile Include="User Controls\ucRemoveProducts.xaml.vb">
       <DependentUpon>ucRemoveProducts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Cardex.xaml.vb">
+      <DependentUpon>Cardex.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\EditEmployeeDetails.xaml.vb">
       <DependentUpon>EditEmployeeDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EmployeeWindows\ChangeEmployee.xaml.vb">
       <DependentUpon>ChangeEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductionWindows\CreateFinishedGood.xaml.vb">
+      <DependentUpon>CreateFinishedGood.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ProductionWindows\CreateJob.xaml.vb">
       <DependentUpon>CreateJob.xaml</DependentUpon>
@@ -138,11 +144,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Cardex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\EditEmployeeDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\EmployeeWindows\ChangeEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductionWindows\CreateFinishedGood.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
