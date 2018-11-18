@@ -12,6 +12,8 @@ Public Class ucCompleteJob
             Return
         End If
         Try
+            Dim query = Convert.ToInt32(txtQuery.Text)
+            foundJob = GetData.FindJob(query, completeJob)
             GetData.CompleteJob(foundJob)
         Catch ex As Exception
 
@@ -26,6 +28,7 @@ Public Class ucCompleteJob
             query = Convert.ToInt32(txtQuery.Text)
             foundJob = GetData.FindJob(query, completeJob)
         Catch ex As Exception
+            MessageBox.Show(ex.Message)
             Return
         End Try
 

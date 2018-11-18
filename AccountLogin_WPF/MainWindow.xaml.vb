@@ -5,12 +5,9 @@ Class MainWindow
     Public Sub OnLoad(sender As Object, e As RoutedEventArgs)
         '! This is inefficent but good enough for now 
         '! (Will run every time even if there are no jobs in either)
-        If GetData.FinalizedJobs.Count = 0 Then
-            GetData.GetFinalJobs()
-        End If
-        If GetData.OpenJobs.Count = 0 Then
-            GetData.GetOpenJobs()
-        End If
+        GetData.GetFinalJobs()
+        GetData.GetOpenJobs()
+
         Try
             Dim cmd As SQLiteCommand = Nothing
             Dim employees As New List(Of Employee)()

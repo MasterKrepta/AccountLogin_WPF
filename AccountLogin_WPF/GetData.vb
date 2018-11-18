@@ -277,11 +277,11 @@ Module GetData
                 While reader.Read()
 
                     job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-                    Try
-                        job.ProductSold = ConvertToRawMat(reader("ProductSold"))
-                    Catch ex As Exception
+
+                    job.ProductSold = ConvertToRawMat(reader("ProductSold"))
+                    If job.ProductSold Is Nothing Then
                         job.ProductSold = ConvertToFinishedGood(reader("ProductSold"))
-                    End Try
+                    End If
 
                     job.QtySold = Convert.ToInt32(reader("QtySold"))
                     job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
@@ -308,7 +308,7 @@ Module GetData
             cmd.Parameters.Add("@Query", SqlDbType.VarChar).Value = query
 
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                Dim product As New Sellable()
+                Dim product As New RawMaterial()
                 While reader.Read()
                     product.Name = Convert.ToString(reader("Name"))
                     product.Cost = Convert.ToDouble(reader("Cost"))
@@ -324,7 +324,7 @@ Module GetData
         Dim cmd As SQLiteCommand = Nothing
         'Dim product As New Product()
 
-        cmd = New SQLiteCommand("SELECT * FROM FinishedGood WHERE FinishedName = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM FinishedGoods WHERE FinishedName = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
