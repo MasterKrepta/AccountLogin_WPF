@@ -277,7 +277,6 @@ Module GetData
                 While reader.Read()
 
                     job.SalesNum = Convert.ToInt32(reader("SaleNumber"))
-
                     job.ProductSold = ConvertToRawMat(reader("ProductSold"))
                     If job.ProductSold Is Nothing Then
                         job.ProductSold = ConvertToFinishedGood(reader("ProductSold"))

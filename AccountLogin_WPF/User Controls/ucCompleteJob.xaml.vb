@@ -7,13 +7,13 @@ Public Class ucCompleteJob
     End Sub
 
     Private Sub btnComplete_Click(sender As Object, e As RoutedEventArgs) Handles btnComplete.Click
-        If foundJob Is Nothing Then
+        If txtQuery.Text = Nothing Then
             MessageBox.Show("No job Selected: Click Search")
             Return
         End If
         Try
-            Dim query = Convert.ToInt32(txtQuery.Text)
-            foundJob = GetData.FindJob(query, completeJob)
+
+
             GetData.CompleteJob(foundJob)
         Catch ex As Exception
 
@@ -24,11 +24,15 @@ Public Class ucCompleteJob
 
     Private Sub btnFind_Click(sender As Object, e As RoutedEventArgs) Handles btnFind.Click
         Dim query As Integer
+        If txtQuery.Text = Nothing Then
+            MessageBox.Show("No job Selected: Click Search")
+            Return
+        End If
         Try
             query = Convert.ToInt32(txtQuery.Text)
             foundJob = GetData.FindJob(query, completeJob)
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MessageBox.Show("Job Num " + query.ToString() + " Not Found")
             Return
         End Try
 
