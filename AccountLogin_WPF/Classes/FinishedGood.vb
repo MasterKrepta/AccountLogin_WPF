@@ -1,7 +1,7 @@
 Public Class FinishedGood
     Inherits Sellable
 
-    Public rawMaterials As List(Of RawMaterial) = New List(Of RawMaterial)(New RawMaterial(4) {})
+    Public rawMaterials As List(Of RawMaterial) = New List(Of RawMaterial)
 
     Sub New()
 

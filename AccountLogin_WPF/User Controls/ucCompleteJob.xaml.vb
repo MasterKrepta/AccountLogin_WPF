@@ -13,8 +13,11 @@ Public Class ucCompleteJob
         End If
         Try
 
-
             GetData.CompleteJob(foundJob)
+            txtQuery.Text = Nothing
+            Dim main = New ProductionManagement()
+            Dim parent = Utilities.GetParentWindow(Me)
+            Utilities.ShowHide(parent, main)
         Catch ex As Exception
 
             MessageBox.Show("job not found::: " + ex.Message)

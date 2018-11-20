@@ -8,6 +8,7 @@ Public Class ucCreateJob
     Private Sub OnLoad()
         'TODO not counting properly, Tracking this down now
         newNum.Text = (GetData.FinalizedJobs.Count + GetData.OpenJobs.Count) + 1
+        GetData.GetAllSellable(newProd)
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click

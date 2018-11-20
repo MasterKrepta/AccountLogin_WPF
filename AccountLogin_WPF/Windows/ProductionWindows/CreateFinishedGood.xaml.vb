@@ -16,6 +16,7 @@ Public Class CreateFinishedGood
             fin.rawMaterials.Add(GetData.GetRawMaterial(newRaw3.Text.ToUpper()))
             fin.rawMaterials.Add(GetData.GetRawMaterial(newRaw4.Text.ToUpper()))
             fin.rawMaterials.Add(GetData.GetRawMaterial(newRaw5.Text.ToUpper()))
+            fin.Cost = 0
             For Each mat In fin.rawMaterials
                 fin.Cost += mat.Cost
             Next
