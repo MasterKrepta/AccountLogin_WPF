@@ -1,5 +1,12 @@
 Public Class CreateFinishedGood
 
+    Sub OnLoad()
+        GetData.GetAllRawMaterials(newRaw1)
+        GetData.GetAllRawMaterials(newRaw2)
+        GetData.GetAllRawMaterials(newRaw3)
+        GetData.GetAllRawMaterials(newRaw4)
+        GetData.GetAllRawMaterials(newRaw5)
+    End Sub
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         Dim main = New MainWindow()
         'Dim parent = Utilities.GetParentWindow(Me)

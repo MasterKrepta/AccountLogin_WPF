@@ -4,7 +4,7 @@ Public Class ucShowEmployee
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         Dim emp As Employee = New Employee()
         Dim dg As DataGrid = newEmployee
-        emp.Name = newName.Text
+        emp.Name = newName.Text.ToUpper()
         emp.Type = newType.Text
         emp.Title = newTitle.Text
 

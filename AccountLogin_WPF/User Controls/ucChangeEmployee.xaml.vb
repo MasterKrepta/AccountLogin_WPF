@@ -12,7 +12,7 @@ Public Class ucChangeEmployee
             empName = searchBox.Text
         End If
 
-        DisplaySearch(empName, SelectedEmployee)
+        DisplaySearch(empName.ToUpper(), SelectedEmployee)
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
@@ -30,8 +30,7 @@ Public Class ucChangeEmployee
     Sub DisplaySearch(query As String, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
-        'cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
-        cmd = New SQLiteCommand("SELECT * FROM Employees WHERE Name = @Query")
+        cmd = New SQLiteCommand("SELECT * FROM Employees WHERE upper(Name) = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()

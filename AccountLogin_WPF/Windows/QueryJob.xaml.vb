@@ -2,7 +2,7 @@ Imports System.Data
 Imports System.Data.SQLite
 
 Public Class QueryJob
-    'Dim job As New Job()
+
     Private Sub btnGet_Click(sender As Object, e As RoutedEventArgs) Handles btnGet.Click
         Dim jobNum As String
 
@@ -15,8 +15,9 @@ Public Class QueryJob
     Sub DisplaySearch(query As String, grid As DataGrid)
         Dim cmd As SQLiteCommand = Nothing
 
-        'cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
-        cmd = New SQLiteCommand("SELECT * FROM Sales WHERE SaleNumber = @Query")
+        cmd = New SQLiteCommand("SELECT *  FROM OpenJobs WHERE SaleNumber = @Query
+                                UNION 
+                                SELECT * FROM CompletedJobs WHERE SaleNumber = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
@@ -45,7 +46,6 @@ Public Class QueryJob
     Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
         searchBox.Clear()
         SelectedJob.ItemsSource = Nothing
-        'job = New Job()
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click

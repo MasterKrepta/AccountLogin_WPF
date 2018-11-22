@@ -10,6 +10,7 @@ Module GetData
     Dim fullPath As String = IO.Path.Combine(path, fileName)
     Public connPath As String = String.Format("Data Source={0}", fullPath)
     'TODO This affects the file in the debug folder, is this correct or do I need to tweak it for final release
+    'TODO also this means the database is not being backed up to github correctly either. 
 
     Public OpenJobs As List(Of Job) = New List(Of Job)
     Public FinalizedJobs As List(Of Job) = New List(Of Job)
@@ -21,11 +22,7 @@ Module GetData
     Public Sub UpdateEmployee(employee As Employee)
         'TODO this will only work with the same name because we dont have a employee number var
         Dim cmd As SQLiteCommand = Nothing
-        '"INSERT INTO Employees(Name, Type, Title, PayRate, Active) VALUES (@Name, @Type, @Title, @Pay, @Active)"
         cmd = New SQLiteCommand("Update Employees SET Type = @NewType, Title = @NewTitle, PayRate = @NewPayRate, Active = @Active WHERE Name= @Name")
-        'UPDATE Customers
-        'SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-        'WHERE CustomerID = 1;
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
             cmd.Connection = conn
             cmd.Connection.Open()
@@ -114,6 +111,24 @@ Module GetData
             Using reader As SQLiteDataReader = cmd.ExecuteReader()
                 While reader.Read()
                     cmboBox.Items.Add(reader("Raw"))
+                End While
+            End Using
+            cmd.Connection.Close()
+        End Using
+
+    End Function
+
+    Public Function GetAllRawMaterials(cmboBox As ComboBox)
+        Dim cmd As SQLiteCommand = Nothing
+
+        cmd = New SQLiteCommand("SELECT Name FROM RawMaterials ")
+        Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
+            cmd.Connection = conn
+            cmd.Connection.Open()
+
+            Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    cmboBox.Items.Add(reader("Name"))
                 End While
             End Using
             cmd.Connection.Close()
@@ -231,6 +246,7 @@ Module GetData
             conn.Close()
         End Using
     End Sub
+
     Public Function GetFinalJobs()
         FinalizedJobs.Clear()
         Dim cmd As SQLiteCommand = Nothing
@@ -304,6 +320,7 @@ Module GetData
                         job.ProductSold = ConvertToFinishedGood(reader("ProductSold"))
                     End If
 
+                    job.TotalMatCost = Convert.ToDouble(reader("TotalMatCost"))
                     job.QtySold = Convert.ToInt32(reader("QtySold"))
                     job.FinalSale = Convert.ToDouble(reader("FinalSalePrice"))
 
@@ -320,7 +337,6 @@ Module GetData
 
     Public Function ConvertToRawMat(query As String)
         Dim cmd As SQLiteCommand = Nothing
-        'Dim product As New Product()
 
         cmd = New SQLiteCommand("SELECT * FROM RawMaterials WHERE Name = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
@@ -343,7 +359,6 @@ Module GetData
 
     Public Function ConvertToFinishedGood(query As String)
         Dim cmd As SQLiteCommand = Nothing
-        'Dim product As New Product()
 
         cmd = New SQLiteCommand("SELECT * FROM FinishedGoods WHERE Name = @Query")
         Using conn As SQLiteConnection = New SQLiteConnection(GetData.connPath)
@@ -363,6 +378,7 @@ Module GetData
             End Using
         End Using
     End Function
+
     Public Sub CompleteJob(job As Job)
         Using conn As SQLiteConnection = New SQLiteConnection(connPath)
             Dim insertString As String = "INSERT INTO CompletedJobs(SaleNumber, ProductSold, QtySold, TotalMatCost, FinalSalePrice) 

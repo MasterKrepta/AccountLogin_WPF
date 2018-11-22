@@ -4,9 +4,6 @@ Module Utilities
         newWin.Show()
     End Sub
 
-    Public Sub FindJob(query As String)
-
-    End Sub
 
     Public Function GetParentWindow(ByVal child As DependencyObject) As Window
         Dim parentObject As DependencyObject = VisualTreeHelper.GetParent(child)
