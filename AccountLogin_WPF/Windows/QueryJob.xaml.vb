@@ -49,8 +49,6 @@ Public Class QueryJob
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        Dim main = New MainWindow()
-        Dim parent = Utilities.GetParentWindow(Me)
-        Utilities.ShowHide(parent, main)
+        Utilities.BackToProduction(Me)
     End Sub
 End Class

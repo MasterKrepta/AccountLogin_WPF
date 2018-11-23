@@ -3,11 +3,9 @@ Imports System.Data.SQLite
 
 Public Class ucRemoveProducts
 
-
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        Dim main = New MainWindow()
         Dim parent = Utilities.GetParentWindow(Me)
-        Utilities.ShowHide(parent, main)
+        Utilities.BackToInventory(parent)
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As RoutedEventArgs) Handles btnConfirm.Click

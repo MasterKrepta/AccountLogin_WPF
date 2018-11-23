@@ -4,7 +4,6 @@ Module Utilities
         newWin.Show()
     End Sub
 
-
     Public Function GetParentWindow(ByVal child As DependencyObject) As Window
         Dim parentObject As DependencyObject = VisualTreeHelper.GetParent(child)
 
@@ -19,4 +18,24 @@ Module Utilities
             Return GetParentWindow(parentObject)
         End If
     End Function
+
+    Public Sub BackToMain(win As Window)
+        Dim main As New MainWindow()
+        Utilities.ShowHide(win, main)
+    End Sub
+
+    Public Sub BackToEmployee(win As Window)
+        Dim main As New EmployeeManagement()
+        Utilities.ShowHide(win, main)
+    End Sub
+
+    Public Sub BackToInventory(win As Window)
+        Dim main As New InventoryManagement()
+        Utilities.ShowHide(win, main)
+    End Sub
+
+    Public Sub BackToProduction(win As Window)
+        Dim main = New ProductionManagement()
+        Utilities.ShowHide(win, main)
+    End Sub
 End Module

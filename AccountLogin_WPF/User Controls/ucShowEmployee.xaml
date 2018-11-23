@@ -16,18 +16,18 @@
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="103*"/>
-            <ColumnDefinition Width="697*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="623*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Employee Name" Grid.Column="0" Grid.Row="0"/>
         <Label Content="Type" Grid.Column="0" Grid.Row="1"/>
         <Label Content="Job Title" Grid.Column="0" Grid.Row="2"/>
         <Label Content="Pay Rate" Grid.Column="0" Grid.Row="3"/>
 
-        <TextBox Name="newName" Grid.Column="1" Grid.Row="0"/>
-        <TextBox Name="newType" Grid.Column="1" Grid.Row="1"/>
-        <TextBox Name="newTitle" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Name="newPay" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Name="newName" Grid.Column="1" Grid.Row="0" Height="Auto"/>
+        <TextBox Name="newType" Grid.Column="1" Grid.Row="1" Height="Auto"/>
+        <TextBox Name="newTitle" Grid.Column="1" Grid.Row="2" Height="Auto"/>
+        <TextBox Name="newPay" Grid.Column="1" Grid.Row="3" Height="Auto"/>
         <StackPanel Grid.Column="0" Grid.Row="5">
             <Button Name="btnCreate" Content="Create Employee" Height="100"/>
             <Button Name="btnCancel" Content="Cancel" Height="100"/>

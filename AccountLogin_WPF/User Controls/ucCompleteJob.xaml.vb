@@ -1,9 +1,9 @@
 Public Class ucCompleteJob
     Dim foundJob As New Job()
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-        Dim main = New MainWindow()
+
         Dim parent = Utilities.GetParentWindow(Me)
-        Utilities.ShowHide(parent, main)
+        Utilities.BackToMain(parent)
     End Sub
 
     Private Sub btnComplete_Click(sender As Object, e As RoutedEventArgs) Handles btnComplete.Click
@@ -12,14 +12,12 @@ Public Class ucCompleteJob
             Return
         End If
         Try
-
             GetData.CompleteJob(foundJob)
             txtQuery.Text = Nothing
             Dim main = New ProductionManagement()
             Dim parent = Utilities.GetParentWindow(Me)
             Utilities.ShowHide(parent, main)
         Catch ex As Exception
-
             MessageBox.Show("job not found::: " + ex.Message)
         End Try
 
@@ -38,7 +36,5 @@ Public Class ucCompleteJob
             MessageBox.Show("Job Num " + query.ToString() + " Not Found")
             Return
         End Try
-
-
     End Sub
 End Class

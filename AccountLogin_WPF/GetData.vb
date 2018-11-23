@@ -3,7 +3,6 @@ Imports System.Data.SQLite
 Imports AccountLogin_WPF
 
 Module GetData
-
     'DataBase Connections
     Dim path As String = My.Application.Info.DirectoryPath + "\DATA\"
     Dim fileName As String = "main.db3"
@@ -15,9 +14,8 @@ Module GetData
     Public OpenJobs As List(Of Job) = New List(Of Job)
     Public FinalizedJobs As List(Of Job) = New List(Of Job)
 
-    Friend Sub ShowEmployee(emp As Employee)
-        MessageBox.Show("Show the employee here")
-    End Sub
+    'TODO This needs split up as this script is too large. 
+
 
     Public Sub UpdateEmployee(employee As Employee)
         'TODO this will only work with the same name because we dont have a employee number var
@@ -69,8 +67,6 @@ Module GetData
             conn.Open()
             cmd.ExecuteNonQuery()
             MessageBox.Show(emp.Name + " has been added")
-
-
             conn.Close()
         End Using
     End Sub
@@ -438,4 +434,5 @@ Module GetData
             cmd.ExecuteNonQuery()
         End Using
     End Sub
+
 End Module

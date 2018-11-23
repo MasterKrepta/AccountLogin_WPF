@@ -1,5 +1,3 @@
-Imports System.Data
-Imports System.Data.SQLite
 Public Class ShowProfit
     Public Sub OnLoad()
         'Profits
@@ -8,7 +6,6 @@ Public Class ShowProfit
         Dim numJobs As Integer = 0
 
         'Calculate
-
         For Each job In GetData.FinalizedJobs
             totalSales += job.FinalSale
             totalCost += job.TotalMatCost
@@ -24,8 +21,6 @@ Public Class ShowProfit
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        Dim main = New MainWindow()
-
-        Utilities.ShowHide(Me, main)
+        Utilities.BackToProduction(Me)
     End Sub
 End Class
